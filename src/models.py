@@ -34,8 +34,8 @@ class Post (db.Model):
     url: Mapped[str] = mapped_column(String(120), nullable=False)
     text: Mapped[str] = mapped_column(nullable=False)
     likes: Mapped[int] = mapped_column(primary_key=False)
-    # users_id: Mapped[int] = mapped_column(ForeignKey("users.id"))
-    # users: Mapped["User"] = relationship(back_populates="post")
+
+    
     comment: Mapped[List["Comment"]] = relationship(back_populates="post")
     like: Mapped[List["Like"]] = relationship(back_populates="post")
 
@@ -51,23 +51,13 @@ class Follower (db.Model):
     follower_user_id: Mapped[int] = mapped_column(ForeignKey("user.id"))
     user: Mapped["User"] = relationship(back_populates="follower")
 
-
-    # user_from_id = mapped_column(ForeignKey("user.id"))
-    # users = relationship("user", back_populates="follow")
-
-    # user_to_id = mapped_column(ForeignKey("user.id"))
-    # users: Mapped["User"] = relationship(back_populates="follow")
     
-
-
 class Comment (db.Model):
     id: Mapped[int] = mapped_column(primary_key=True)
     text: Mapped[str] = mapped_column(nullable=False)
     post_id: Mapped[int] = mapped_column(ForeignKey("post.id"))
     post: Mapped["Post"] = relationship(back_populates="comment")
-    # users_id: Mapped[int] = mapped_column(ForeignKey("users.id"))
-    # users: Mapped["User"] = relationship(back_populates="comment")
-
+   
     user_id: Mapped[int] = mapped_column(ForeignKey("user.id"))
     user: Mapped["User"] = relationship(back_populates="comment")
   
@@ -75,8 +65,6 @@ class Like (db.Model):
     id: Mapped[int] = mapped_column(primary_key=True)
     post_id: Mapped[int] = mapped_column(ForeignKey("post.id"))
     post: Mapped["Post"] = relationship(back_populates="like")
-    # users_id: Mapped[int] = mapped_column(ForeignKey("users.id"))
-    # users: Mapped["User"] = relationship(back_populates="like")
 
     user_id: Mapped[int] = mapped_column(ForeignKey("user.id"))
     user: Mapped["User"] = relationship(back_populates="like")
